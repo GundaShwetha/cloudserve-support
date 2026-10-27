@@ -159,10 +159,13 @@ def train_and_save(settings: Settings, analyse: bool = False) -> dict:
     models: TrainedModels = train_models(tickets, settings.train_path.name)
     save_models(models, settings)
     data = _read(settings)
+    if not analyse and "answerable_probability_min" in data:
+        # Automatic (re)training at start-up: the model is rebuilt deterministically in storage/, and the
+        # committed thresholds are left untouched.
+        return data
     data.update({"trained_at": datetime.now(timezone.utc).isoformat(timespec="seconds"),
                  "classifier_version": models.version, "n_train": len(tickets)})
-    if analyse or "answerable_probability_min" not in data:
-        data.update(select_thresholds(settings, tickets))
+    data.update(select_thresholds(settings, tickets))
     _write(settings, data)
     return data
 
