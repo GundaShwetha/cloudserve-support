@@ -1,0 +1,8 @@
+# Scrapes the FastAPI service (python -m src.api serves /metrics on port 8000).
+global:
+  scrape_interval: 15s
+scrape_configs:
+  - job_name: "cloudserve-support"
+    metrics_path: /metrics
+    static_configs:
+      - targets: ["host.docker.internal:8000"]
