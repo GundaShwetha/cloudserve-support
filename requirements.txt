@@ -1,0 +1,30 @@
+# Pinned dependencies. Python 3.10, 3.11 or 3.12 (tested on 3.11 in CI).
+# Install:  python -m pip install -r requirements.txt
+
+# --- orchestration (LangGraph, prescribed stack) ---
+langgraph==0.4.8
+langgraph-checkpoint==2.0.26
+langgraph-prebuilt==0.2.2
+langgraph-sdk==0.1.70
+langchain-core==0.3.65
+
+# --- retrieval: Chroma with all-MiniLM-L6-v2 (Chroma's bundled ONNX build; no PyTorch needed) ---
+chromadb==0.6.3
+
+# --- classification and numerics ---
+scikit-learn==1.6.1
+numpy==1.26.4
+
+# --- service ---
+fastapi==0.115.12
+uvicorn==0.34.0
+pydantic==2.10.6
+httpx==0.28.1
+
+# --- model provider, configuration, monitoring ---
+requests==2.32.3
+python-dotenv==1.0.1
+prometheus-client==0.21.1
+
+# --- tests ---
+pytest==8.3.5

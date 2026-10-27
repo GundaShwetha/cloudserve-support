@@ -1,0 +1,14 @@
+.env
+storage/
+__pycache__/
+*.pyc
+.venv/
+venv/
+.pytest_cache/
+evaluation/results/*/
+!evaluation/results/validation_run/
+*.sqlite
+*.db
+.DS_Store
+.idea/
+.vscode/

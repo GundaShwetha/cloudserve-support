@@ -1,0 +1,13 @@
+# Fallback install for machines where chromadb or langgraph cannot be installed.
+# The system then uses its local TF-IDF retrieval and built-in executor automatically
+# (recorded in every decision and in the metrics report). See README "Troubleshooting".
+scikit-learn==1.6.1
+numpy==1.26.4
+fastapi==0.115.12
+uvicorn==0.34.0
+pydantic==2.10.6
+httpx==0.28.1
+requests==2.32.3
+python-dotenv==1.0.1
+prometheus-client==0.21.1
+pytest==8.3.5
