@@ -1,0 +1,25 @@
+{
+  "answerable_probability_min": 0.54,
+  "classifier_version": "tfidf-lr-ca1a7c2528",
+  "expected_on_development": {
+    "auto_precision": 0.7735,
+    "auto_rate": 0.724,
+    "auto_recall": 0.9003,
+    "cost": 195.0,
+    "escalation_rate": 0.276,
+    "missed_auto": 31,
+    "never_auto_violations": 0,
+    "routing_accuracy": 0.774,
+    "t_ans": 0.54,
+    "wrong_auto": 82
+  },
+  "grounding_min_support": 0.6,
+  "intent_confidence_min": 0.3,
+  "n_train": 500,
+  "retrieval_min_score": 0.336,
+  "retrieval_min_score_by_backend": {
+    "tfidf": 0.336
+  },
+  "selected_by": "5-fold out-of-fold simulation on development_tickets.json: minimum expected cost with a wrong automatic reply costing 2x a missed automation, zero never-auto violations",
+  "trained_at": "2026-10-27T13:16:17+00:00"
+}
