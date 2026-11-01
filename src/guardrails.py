@@ -86,6 +86,34 @@ def _tokens(text: str) -> list[str]:
         out.append(w)
     return out
 
+_NUM_WORDS = {w: i for i, w in enumerate(
+    "zero one two three four five six seven eight nine ten eleven twelve thirteen fourteen "
+    "fifteen sixteen seventeen eighteen nineteen".split())}
+_NUM_WORDS.update({"twenty": 20, "thirty": 30, "forty": 40, "fifty": 50, "sixty": 60,
+                   "seventy": 70, "eighty": 80, "ninety": 90})
+_SCALES = {"hundred": 100, "thousand": 1000}
+
+
+def numbers_in(text: str) -> set[str]:
+    """Every number in the text, whether written as digits or as words ('two hundred' -> '200')."""
+    found = set(re.findall(r"\b\d+(?:\.\d+)?\b", text))
+    total, current = 0, None
+    for w in re.findall(r"[a-z]+", text.lower().replace("-", " ")):
+        if w in _NUM_WORDS:
+            current = (current or 0) + _NUM_WORDS[w]
+        elif w in _SCALES and current is not None:
+            current *= _SCALES[w]
+            if _SCALES[w] >= 1000:
+                total, current = total + current, 0
+        elif w == "and" and current is not None:
+            continue
+        else:
+            if current is not None:
+                found.add(str(total + current))
+            total, current = 0, None
+    if current is not None:
+        found.add(str(total + current))
+    return found
 
 def _luhn(digits: str) -> bool:
     nums = [int(d) for d in digits if d.isdigit()]
@@ -182,7 +210,9 @@ def check_grounding(draft: Draft, retrieval: Retrieval, min_support: float, temp
             if support < min_support:
                 problems.append(f"only {support:.0%} of '{s.text[:50]}' is found in {s.citations[0]}")
                 continue
-        missing_numbers = [n for n in re.findall(r"\b\d+(?:\.\d+)?\b", s.text) if n not in source and not re.fullmatch(r"\d", n)]
+        source_numbers = numbers_in(source)
+        missing_numbers = [n for n in re.findall(r"\b\d+(?:\.\d+)?\b", s.text)
+                           if n not in source_numbers and not re.fullmatch(r"\d", n)]
         if missing_numbers:
             problems.append(f"number {missing_numbers[0]} not in cited passage")
     if checked == 0:

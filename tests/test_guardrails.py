@@ -74,3 +74,16 @@ def test_every_extractive_reply_passes_its_own_guardrails(system):
         r = Retrieval([Passage(res.chunk_id, doc_id, res.title, res.section, res.text, 1.0)], "tfidf", "q", True, 1.0, 0.3)
         out = statuses(check_output(gen.draft(r), r, ROUTE, normalise({"body": "x"}), 0.6, system.other_names, TEMPLATE_SENTENCES))
         assert set(out.values()) == {"pass"}, (doc_id, out)
+
+def test_number_words_in_the_article_support_digits_in_the_reply():
+    """Found on the first live-model run: the article says 'Thirty seconds', the model wrote '30 seconds'."""
+    p = Passage("DOC-DEPLOY-001#resolution", "DOC-DEPLOY-001", "Container deployments failing", "Resolution",
+                "Increase the initial delay. Thirty seconds is a reasonable starting point. "
+                "Keep page size at or below two hundred.", 0.9)
+    r = Retrieval([p], "tfidf", "q", True, 0.9, 0.3)
+    ok1 = Sentence("Increase the initial delay; 30 seconds is a reasonable starting point.", [p.chunk_id])
+    ok2 = Sentence("Keep page size at or below 200.", [p.chunk_id])
+    bad = Sentence("Increase the initial delay; 45 seconds is a reasonable starting point.", [p.chunk_id])
+    assert check_grounding(draft(ok1), r, 0.6, TEMPLATE_SENTENCES).status == "pass"
+    assert check_grounding(draft(ok2), r, 0.6, TEMPLATE_SENTENCES).status == "pass"
+    assert check_grounding(draft(bad), r, 0.6, TEMPLATE_SENTENCES).status == "fail"

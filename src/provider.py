@@ -131,7 +131,7 @@ class OpenAICompatibleProvider:
                         "Content-Type": "application/json",
                         "X-Title": "CloudServe support capstone",
                     },
-                    json={"model": self.model, "messages": messages, "temperature": 0, "max_tokens": 700},
+                    json={"model": self.model, "messages": messages, "temperature": 0, "max_tokens": 2500},
                     timeout=self.settings.llm_timeout_s,
                 )
             except requests.RequestException as exc:
