@@ -1,6 +1,5 @@
-# Pinned dependencies. Python 3.10, 3.11 or 3.12 (tested on 3.11 in CI).
+# Pinned dependencies. Python 3.10 or 3.11 (3.12 works on macOS/Linux, not on Windows: chroma-hnswlib has no 3.12 Windows build). Tested on 3.11 in CI.
 # Install:  python -m pip install -r requirements.txt
-
 # --- orchestration (LangGraph, prescribed stack) ---
 langgraph==0.4.8
 langgraph-checkpoint==2.0.26

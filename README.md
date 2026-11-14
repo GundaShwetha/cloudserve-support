@@ -23,9 +23,13 @@ ticket (email | chat | docs comment | forum)
 
 ## 1. Run it (tested from a clean checkout)
 
-Requirements: **Python 3.10, 3.11 or 3.12** and git. About 1.5 GB free disk for dependencies.
+Requirements: **Python 3.10 or 3.11** (3.12 also works on macOS and Linux) and git. About 1.5 GB free disk.
+On **Windows use Python 3.10 or 3.11**: the Chroma dependency (chroma-hnswlib 0.7.6) has no ready-built
+package for Python 3.12 on Windows, so pip would try to compile it and fail with
+"Microsoft Visual C++ 14.0 or greater is required".
 No API key is needed to run anything below; with a key, replies are drafted by the model instead of
 extracted from the documentation.
+
 
 ### 1.1 Get the code and create an environment
 
@@ -50,7 +54,9 @@ python -m pip install --upgrade pip
 python -m pip install -r requirements.txt
 copy .env.example .env
 ```
-
+If `py -0` does not list 3.10 or 3.11, install Python 3.11 from python.org, or with Anaconda run
+`conda create -n cs311 python=3.11 -y`, `conda activate cs311`, `python -m venv .venv`, `conda deactivate`,
+then activate `.venv` as above.
 Optional: put your OpenRouter (or Groq) key into `.env` as `OPENROUTER_API_KEY=...`.
 Leave it as `your_key_here` to run without a model.
 
