@@ -11,7 +11,7 @@ Record in the report: date of each validation/hidden run and the number of runs.
 | Run | Date (UTC) | Set | Retrieval | Generation | Purpose |
 |---|---|---|---|---|---|
 | run-20261027T131617Z-2ac3fe | 2026-10-27 | validation (80) | tfidf (build sandbox had no access to the embedding model) | extractive (no provider key) | first and only validation run of v1.0 |
-| (add yours) | | | chroma-minilm | llm | run on your machine with the full stack |
+| run-20261101T180745Z-1d5629 | 2026-11-01 | validation (80) | chroma-minilm | llm (nvidia/nemotron-3-ultra-550b-a55b:free, OpenRouter) + extractive fallback | second run: full prescribed stack on my own machine; no tuning between runs |
 
 ## Measures and how each is computed (all by `evaluation/metrics.py`)
 
@@ -50,5 +50,6 @@ Record in the report: date of each validation/hidden run and the number of runs.
 * The validation set is small (80): most proportions have 95 % intervals 15-25 points wide; fairness
   groups (e.g. 8 enterprise tickets) are smaller still.
 * Reply time for escalations is modelled, not observed; satisfaction is a rubric proxy, not customer data.
-* The recorded validation run used TF-IDF retrieval and extractive replies; the MiniLM + model
-  configuration must be measured on the author's machine and reported separately.
+* Run 1 used TF-IDF retrieval and extractive replies; run 2 (the main result) used MiniLM and a live model.
+* The non-fluent gap on validation (19 tickets) does not appear in the 500 development tickets
+  (docs/fairness_development.md); it needs more data before any threshold is changed.

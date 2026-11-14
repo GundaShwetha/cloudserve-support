@@ -21,9 +21,16 @@ monitoring configuration and drafts of the documentation in `docs/` - were gener
 explain every file before submission, and should record here where the generated output was changed
 or overridden, for example:
 
+Where the author changed, overrode or decided:
+
 | File / area | What the AI produced | What the author changed or decided, and why |
 |---|---|---|
-| | | |
+| `.env` / `src/config.py` | Default model meta-llama free tier | Switched to nvidia/nemotron-3-ultra-550b-a55b:free after Llama was no longer free and Nano returned 404; raised timeout and max tokens after JSON was cut off |
+| `src/guardrails.py` (grounding) | Digits-only number check | "30 seconds" was blocked against "Thirty seconds" in run 2; number words now count as supported |
+| `prompts/build/PR-03` | Version 1.0 | Added rule 8 (v1.1) instead of loosening the guardrail when framing sentences were blocked |
+| `.github/workflows`, `.gitignore` | CI file, results folder ignored | CI YAML error fixed (with Claude's help); results folder un-ignored so run evidence is committed |
+| Routing thresholds | Fairness option A proposed | Development-data check run; decided not to change the threshold (docs/fairness_development.md) |
+| `README.md`, `requirements.txt` | Python 3.10-3.12 stated | Clean-checkout test on 14 Nov failed on Windows with Python 3.12; documented Python 3.10/3.11 |
 
 The discovery figures in docs/discovery_evidence.md are computed by code from the supplied data; the
 problem statement, the interpretation of the evaluation results and the reflection are the author's own.

@@ -13,6 +13,18 @@ genuinely answers, and a handover note for every other ticket. Escalation is a p
 
 ## 2. High-level view
 
+![High-level architecture](diagrams/high_level.png)
+
+Low-level view (three layers):
+
+![Low-level architecture](diagrams/low_level.png)
+
+Routing decision:
+
+![Routing](diagrams/routing.png)
+
+The same flow as text (mermaid):
+
 ```mermaid
 flowchart LR
     A[Ticket: email / chat / docs comment / forum] --> I[Ingest\nnormalise]
